@@ -22,7 +22,7 @@ export class ProductManager{
                     return false;
                 }
             }else {
-                console.log(`Todos los campos son obligatorios: ${p.validate().errors}`);
+                console.log(`Todos los campos son obligatorios: ${JSON.stringify(p.validate().errors)}`);
                 return false;
             }
 

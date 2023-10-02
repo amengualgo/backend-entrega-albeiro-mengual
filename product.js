@@ -27,28 +27,28 @@ export class Product {
     validate = () => {
         let errors = [];
         if(!this.title.toString().trim() != ""){
-            this.errors.push({title:"Error, campo requerido"});
+            errors.push({title:"Error, campo requerido"});
         }
         if(!this.description.toString().trim() != ""){
-            this.errors.push({description:"Error, campo requerido"});
+            errors.push({description:"Error, campo requerido"});
         }
         if(!this.price.toString().trim() != ""){
-            this.errors.push({price:"Error, campo requerido"});
+            errors.push({price:"Error, campo requerido"});
         }
         if(!Number.parseFloat(this.price)){
-            this.errors.push({price:"Error, escriba un número"});
+            errors.push({price:"Error, escriba un número"});
         }
         if(!this.thumbnail.toString().trim() != ""){
-            this.errors.push({thumbnail:"Error, campo requerido"});
+            errors.push({thumbnail:"Error, campo requerido"});
         }
         if(!this.code.toString().trim() != ""){
-            this.errors.push({code:"Error, campo requerido"});
+            errors.push({code:"Error, campo requerido"});
         }
         if(!this.stock.toString().trim() != ""){
-            this.errors.push({stock:"Error, campo requerido"});
+            errors.push({stock:"Error, campo requerido"});
         }
         if(!Number.parseFloat(this.stock)){
-            this.errors.push({price:"Error, escriba un número"});
+            errors.push({price:"Error, escriba un número"});
         }
 
         return { status: errors.length > 0 ? false : true , errors : errors  }

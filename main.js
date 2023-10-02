@@ -3,7 +3,7 @@ import {Product} from "./product.js";
 
 let productManager = new ProductManager();
 productManager.getProducts();
-let p = new Product('123', 'producto de prueba',  100, 'sin imagen', 's123abc', '1');
+let p = new Product('123', 'producto de prueba',  12, 'sin imagen', 's123abc', '1');
 console.log(p);
 
 productManager.addProduct(p);
