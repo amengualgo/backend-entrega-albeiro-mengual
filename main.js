@@ -1,25 +1,19 @@
 import {ProductManager} from "./product-manager.js";
 import {Product} from "./product.js";
 
-let productManager = new ProductManager();
-productManager.getProducts();
-let p = new Product('123', 'producto de prueba',  12, 'sin imagen', 's123abc', '1');
-console.log(p);
+let productManager = new ProductManager('./products.json');
+console.log(await productManager.getProducts());
+let p = new Product('producto de prueba', 'Este es un producto prueba',  200, 'sin imagen', 'abc123', '52');
+console.log(await productManager.addProduct(p));
+console.log(await productManager.getProducts());
+console.log(await productManager.findById(1));
+await productManager.updateProduct(1,{'description':'Nueva descripcion'});
+console.log(await productManager.findById(1));
+//await productManager.deleteProduct(1);
+console.log(await productManager.findById(1));
 
-productManager.addProduct(p);
 
-productManager.addProduct(p);
 
-p = new Product('098', 'producto de prueba 2',  100, 'sin imagen', '098rbc', '1');
 
-productManager.addProduct(p);
-
-let _found = productManager.findById(1);
-
- _found = productManager.findById(2);
-
-productManager.getProducts();
-
- _found = productManager.findById(3);
 
 
