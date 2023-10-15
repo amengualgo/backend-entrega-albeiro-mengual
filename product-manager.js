@@ -39,9 +39,11 @@ export class ProductManager{
         }
     }
     findByCode = async (code)=>{
+        await this.getJSONFromFile(this.path);
         return this.products.find((element) => element.product.code == code ) ? true :  false;
     }
     findById = async (id)=>{
+        await this.getJSONFromFile(this.path);
         const itemFound = this.products.find((element) => element.id == id );
         if (itemFound){
             return itemFound
