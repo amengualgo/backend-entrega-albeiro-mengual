@@ -1,10 +1,10 @@
-import {Product} from  "./product.js";
-import fs from "fs";
+const Product = require('./product')
+const fs = require('fs');
 
 
 
 
-export class ProductManager{
+class ProductManager{
     //#region constructor
     constructor(path) {
         this.products = [];
@@ -101,3 +101,5 @@ export class ProductManager{
 
     //#endregion
 }
+
+module.exports = ProductManager;

@@ -1,4 +1,4 @@
-export class Product {
+class Product {
 
     //#region constructor
     constructor(title, description, price, thumbnail, code, stock) {
@@ -55,3 +55,5 @@ export class Product {
     }
     //#endregion
 }
+
+module.exports = Product;
