@@ -8,7 +8,8 @@
 				"price": 201,
 				"thumbnail": "sin imagen 1",
 				"code": "abc1",
-				"stock": "51"
+				"stock": 51,
+				"category": ""
 			}
 		},
 		{
@@ -19,7 +20,8 @@
 				"price": 202,
 				"thumbnail": "sin imagen 2",
 				"code": "abc2",
-				"stock": "52"
+				"stock": 52,
+				"category": ""
 			}
 		},
 		{
@@ -30,7 +32,8 @@
 				"price": 203,
 				"thumbnail": "sin imagen 3",
 				"code": "abc3",
-				"stock": "53"
+				"stock": 53,
+				"category": ""
 			}
 		},
 		{
@@ -41,7 +44,8 @@
 				"price": 204,
 				"thumbnail": "sin imagen 4",
 				"code": "abc4",
-				"stock": "54"
+				"stock": 54,
+				"category": ""
 			}
 		},
 		{
@@ -52,7 +56,8 @@
 				"price": 205,
 				"thumbnail": "sin imagen 5",
 				"code": "abc5",
-				"stock": "55"
+				"stock": 55,
+				"category": ""
 			}
 		},
 		{
@@ -63,7 +68,8 @@
 				"price": 206,
 				"thumbnail": "sin imagen 6",
 				"code": "abc6",
-				"stock": "56"
+				"stock": 56,
+				"category": ""
 			}
 		},
 		{
@@ -74,7 +80,8 @@
 				"price": 207,
 				"thumbnail": "sin imagen 7",
 				"code": "abc7",
-				"stock": "57"
+				"stock": 57,
+				"category": ""
 			}
 		},
 		{
@@ -85,7 +92,8 @@
 				"price": 208,
 				"thumbnail": "sin imagen 8",
 				"code": "abc8",
-				"stock": "58"
+				"stock": 58,
+				"category": ""
 			}
 		},
 		{
@@ -96,44 +104,11 @@
 				"price": 209,
 				"thumbnail": "sin imagen 9",
 				"code": "abc9",
-				"stock": "59"
-			}
-		},
-		{
-			"id": 10,
-			"product": {
-				"title": "producto de prueba 10",
-				"description": "Este es un producto prueba 10",
-				"price": 210,
-				"thumbnail": "sin imagen 10",
-				"code": "abc10",
-				"stock": "60"
-			}
-		},
-		{
-			"id": 11,
-			"product": {
-				"title": "producto de prueba 11",
-				"description": "Este es un producto prueba 11",
-				"price": 211,
-				"thumbnail": "sin imagen 11",
-				"code": "abc11",
-				"stock": "62"
-			}
-		},
-		{
-			"id": 12,
-			"product": {
-				"title": "producto de prueba 12",
-				"description": "Este es un producto prueba 12",
-				"price": 212,
-				"thumbnail": "sin imagen 12",
-				"code": "abc12",
-				"stock": "62"
+				"stock": 59,
+				"category": ""
 			}
 		}
-
 	],
-	"id": 12,
+	"id": 17,
 	"path": "./products.json"
 }

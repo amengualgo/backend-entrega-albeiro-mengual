@@ -1,9 +1,6 @@
 const Product = require('./product')
 const fs = require('fs');
 
-
-
-
 class ProductManager{
     //#region constructor
     constructor(path) {
@@ -14,9 +11,10 @@ class ProductManager{
     //#endregion
 
     //#region methods
-    addProduct = async (p = new Product()) => {
+    addProduct = async (product)  => {
         try{
-
+            let p = new Product(product.title, product.description, product.price, product.thumbnail,
+                product.code, product.stock, product.category);
             if(p.validate().status){
                 await this.getJSONFromFile(this.path);
                 if(!await this.findByCode(p.code)){
@@ -24,14 +22,15 @@ class ProductManager{
                     this.products.push({id: this.id, product : p});
                     console.log(`Elemento agregado correctamente, Id: ${this.id}`);
                     await this.saveJSONToFile(this.path, this);
-                    return this.id;
+                    return {status:true, message:`Elemento creado correctamente id: ${this.id}`};
                 }else{
                     console.log(`Producto con código: ${p.code} ya existe`);
-                    return false;
+                    return {status:false, errors:`Producto con código: ${p.code} ya existe`};
                 }
             }else {
-                console.log(`Todos los campos son obligatorios: ${JSON.stringify(p.validate().errors)}`);
-                return false;
+                const _errors = p.validate().errors;
+                console.log(`Todos los campos son obligatorios: ${JSON.stringify(_errors)}`);
+                return {status:false, errors:_errors};
             }
 
         }catch (e) {
@@ -49,7 +48,8 @@ class ProductManager{
             return itemFound
         }else
         {
-            console.log(`Elemento con id: ${id} no encontrado`)
+            console.log(`Elemento con id: ${id} no encontrado`);
+            return false;
         }
     }
     getProducts = async () =>{
@@ -70,8 +70,15 @@ class ProductManager{
     }
     deleteProduct =async(id)=>{
         await this.getJSONFromFile(this.path);
-        this.products = this.products.filter(value => value.id != id);
-        await this.saveJSONToFile(this.path, this);
+        const _Response = await this.findById(id);
+        if(_Response){
+            this.products = this.products.filter(value => value.id != id);
+            await this.saveJSONToFile(this.path, this);
+            return true
+        }else{
+            return false
+        }
+
     }
     getJSONFromFile = async (path) => {
         try {
