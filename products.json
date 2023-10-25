@@ -3,13 +3,13 @@
 		{
 			"id": 1,
 			"product": {
-				"title": "producto de prueba 1",
-				"description": "Este es un producto prueba 1",
+				"title": "n11",
+				"description": "nuev11",
 				"price": 201,
 				"thumbnail": "sin imagen 1",
 				"code": "abc1",
 				"stock": 51,
-				"category": ""
+				"category": "Nueva categoria"
 			}
 		},
 		{

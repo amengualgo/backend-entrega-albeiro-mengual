@@ -13,18 +13,6 @@ class Product {
     }
     //#endregion
     //#region methods
-    getTitle = () => { return this.title  };
-    setTitle = (title) => { this.title = title  };
-    getDescription = () => {return this.description};
-    setDescription = (description) => {this.description = description};
-    getPrice = () => {return this.price};
-    setPrice = (price) => {this.price = price};
-    getThumbnail = () => {return this.thumbnail};
-    setThumbnail = (thumbnail) => {this.thumbnail = thumbnail};
-    getCode = () => {return this.code};
-    setCode = (code) => {this.code = code};
-    getStock = () => {return this.stock};
-    setStock = (stock) => {this.stock = stock};
 
     validate = () => {
         try{
