@@ -1,0 +1,46 @@
+{
+	"carts": [
+		{
+			"id": "480ef773-2fe9-4e42-b2d9-6d31396012ce",
+			"products": []
+		},
+		{
+			"id": "152fa671-62b4-48fe-8bde-6bded5c1dd39",
+			"products": []
+		},
+		{
+			"id": "c592e71f-7511-4f47-a482-63b268b069d6",
+			"products": []
+		},
+		{
+			"id": "485998a9-6fe5-4516-8ba9-13e028269f93",
+			"products": []
+		},
+		{
+			"id": "33bd8e98-67cf-49af-b208-cea2eee6cd4d",
+			"products": []
+		},
+		{
+			"id": "8f037699-afb8-4e42-989d-fedd36859f6b",
+			"products": []
+		},
+		{
+			"id": "e3e6b1f2-2848-4cb3-ba8b-3ec4bd1fdf70",
+			"products": [
+				{
+					"id": 9,
+					"quantity": 7
+				},
+				{
+					"id": 1,
+					"quantity": 12
+				},
+				{
+					"id": 5,
+					"quantity": 20
+				}
+			]
+		}
+	],
+	"path": "./carts.json"
+}
