@@ -1,6 +1,7 @@
 const Cart = require('./cart')
 const fs = require('fs');
-const { v4: uuidv4 } = require('uuid');
+const ProductManager = require("../classes/product-manager");
+const productManager = new ProductManager('./products.json');
 
 class CartManager{
     //#region constructor
@@ -38,36 +39,37 @@ class CartManager{
             return false;
         }
     }
-    /*
-    getProducts = async () =>{
-        await this.getJSONFromFile(this.path);
-        return this.products
-    }
-    updateProduct = async (id, obj)=>{
-        await this.getJSONFromFile(this.path);
-        let element = this.products.find(product => product.id === id);
-        const key = Object.keys(obj);
-        if (element){
-        key.map((k)=>{
-            ( k in element.product) ? element.product[k] = obj[k] : console.error('NO existe la clave ', k)
-        });
-        await this.saveJSONToFile(this.path, this);
+    addProductInCart = async (cid, pid, quantity) =>{
+        const _carts = cid ? await this.findById(cid) : undefined;
+        if(_carts){
+            const _product = await  productManager.findById(pid);
+            if(_product){
+                const idx = _carts.products.findIndex(value => parseInt(value.id) === parseInt(pid));
+                if(idx>=0){
+                    _carts.products[idx].quantity = _carts.products[idx].quantity + parseInt(quantity);
+                    await this.getJSONFromFile(this.path);
+                    this.carts = this.carts.filter(value => value.id != cid);
+                    this.carts.push(_carts);
+                    await this.saveJSONToFile(this.path, this);
+                    return 200;
+
+                }else{
+                    _carts.products.push({id:parseInt(pid), quantity:parseInt(quantity)});
+                    await this.getJSONFromFile(this.path);
+                    this.carts = this.carts.filter(value => value.id != cid);
+                    this.carts.push(_carts);
+                    await this.saveJSONToFile(this.path, this);
+                    return 201
+
+                }
+            }else{
+                return 404
             }
-        return element ? element : {}
-    }
-    deleteProduct =async(id)=>{
-        await this.getJSONFromFile(this.path);
-        const _Response = await this.findById(id);
-        if(_Response){
-            this.products = this.products.filter(value => value.id != id);
-            await this.saveJSONToFile(this.path, this);
-            return true
         }else{
-            return false
+            return 404
         }
 
     }
-    */
     getJSONFromFile = async (path) => {
         try {
             await fs.promises.access(path, );
