@@ -1,0 +1,71 @@
+<h1>Productos en real time</h1>
+<div>
+    <div>
+        <form>
+            <div class="grid">
+                <label for="title">
+                    Title
+                    <input type="text" id="title" name="title" placeholder="title" required>
+                </label>
+                <label for="description">
+                    description
+                    <input type="text" id="description" name="description" placeholder="description" required>
+                </label>
+                <label for="price">
+                    Price
+                    <input type="text" id="price" name="price" placeholder="price" required>
+                </label>
+            </div>
+
+            <div class="grid">
+                <label for="code">
+                    Code
+                    <input type="text" id="code" name="code" placeholder="code" required>
+                </label>
+                <label for="thumbnail">
+                    Category
+                    <input type="text" id="category" name="category" placeholder="category" required>
+                </label>
+            </div>
+            <label for="thumbnail">
+                Thumbnail
+                <input type="text" id="thumbnail" name="thumbnail" placeholder="thumbnail" required>
+            </label>
+            <button type="submit">Adicionar</button>
+        </form>
+    </div>
+    <div>
+        {{#if products}}
+            {{#if products.length}}
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">title</th>
+                            <th scope="col">description</th>
+                            <th scope="col">price</th>
+                            <th scope="col">thumbnail</th>
+                            <th scope="col">code</th>
+                            <th scope="col">stock</th>
+                            <th scope="col">category</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each products}}
+                        <tr>
+                            <th scope="row">{{this.id}}</th>
+                            <td>{{this.product.title}}</td>
+                            <td>{{this.product.description}}</td>
+                            <td>{{this.product.price}}</td>
+                            <td>{{this.product.thumbnail}}</td>
+                            <td>{{this.product.code}}</td>
+                            <td>{{this.product.stock}}</td>
+                            <td>{{this.product.category}}</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            {{/if}}
+        {{/if}}
+    </div>
+</div>
