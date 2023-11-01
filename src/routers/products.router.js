@@ -2,6 +2,7 @@ const { Router } = require('express');
 const ProductManager = require("../classes/product-manager");
 const express = require("express");
 const Product = require("../classes/product");
+const {uploader} = require('../common/utils');
 const router = Router();
 const productManager = new ProductManager('./products.json');
 router.use(express.urlencoded({extended: true}));
@@ -28,14 +29,16 @@ router.get('/products/:pid', async (req, res) => {
         return  res.status(500).json({message:e.message})
     }
 });
-router.post('/products', async (req, res) => {
-    const {body} = req;
+router.post('/products', uploader.single('thumbnail'), async (req, res) => {
+    let {body} = req;
+    body.thumbnail = req.file.path;
     try{
         const _response = await productManager.addProduct(body);
         if(_response.status){
-            res.status(201).json({message:_response.message})
+            res.status(201).json({message:_response.message});
+
         }else{
-            res.status(400).json({errors:_response.errors})
+            res.status(400).json({errors:_response.errors});
         }
     }catch (e) {
         console.log('A ocurrido un error: ', e.message);

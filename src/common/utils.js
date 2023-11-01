@@ -1,14 +1,15 @@
 const multer =  require('multer');
 const path = require('path');
+const {v4: uuidv4} = require("uuid");
 
 const storage = multer.diskStorage({
     destination:(req, file, callback)=>{
-        const folderPath = path.join(__dirname, '../public/img');
+        const folderPath = path.join(__dirname, '../../public/img');
         console.log('folderPath', folderPath);
         callback(null, folderPath);
     },
     filename:(req, file, callback)=>{
-        callback(null, file.originalname);
+        callback(null, uuidv4()+'__'+file.originalname);
     }
 })
 

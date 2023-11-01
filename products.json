@@ -133,8 +133,60 @@
 				"status": true,
 				"category": "werew"
 			}
+		},
+		{
+			"id": 22,
+			"product": {
+				"title": "producto de prueba 22",
+				"description": "Este es un producto prueba 12",
+				"price": "222",
+				"thumbnail": "/home/fox/coderHouse/comision-47340/entregables/pre-entrega-01/public/img/2023-07-26_19-55.png",
+				"code": "abc22",
+				"stock": "22",
+				"status": true,
+				"category": "category22"
+			}
+		},
+		{
+			"id": 23,
+			"product": {
+				"title": "producto de prueba 23",
+				"description": "Este es un producto prueba 23",
+				"price": "223",
+				"thumbnail": "/home/fox/coderHouse/comision-47340/entregables/pre-entrega-01/public/img/2023-07-26_19-55.png",
+				"code": "abc23",
+				"stock": "23",
+				"status": true,
+				"category": "category23"
+			}
+		},
+		{
+			"id": 24,
+			"product": {
+				"title": "producto de prueba 24",
+				"description": "Este es un producto prueba 24",
+				"price": "224",
+				"thumbnail": "/home/fox/coderHouse/comision-47340/entregables/pre-entrega-01/public/img/44968e0b-f116-4de9-859b-d87c867c92542023-07-26_19-55.png",
+				"code": "abc24",
+				"stock": "24",
+				"status": true,
+				"category": "category24"
+			}
+		},
+		{
+			"id": 25,
+			"product": {
+				"title": "producto de prueba 25",
+				"description": "Este es un producto prueba 25",
+				"price": "225",
+				"thumbnail": "/home/fox/coderHouse/comision-47340/entregables/pre-entrega-01/public/img/2db57af0-3e36-43a0-a620-d1fa597f6bdb__2023-07-26_19-55.png",
+				"code": "abc25",
+				"stock": "25",
+				"status": true,
+				"category": "category25"
+			}
 		}
 	],
-	"id": 21,
+	"id": 25,
 	"path": "./products.json"
 }
