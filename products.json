@@ -107,8 +107,34 @@
 				"stock": 59,
 				"category": ""
 			}
+		},
+		{
+			"id": 18,
+			"product": {
+				"title": "1",
+				"description": "2",
+				"price": "3",
+				"thumbnail": "7",
+				"code": "5",
+				"stock": "4",
+				"status": true,
+				"category": "6"
+			}
+		},
+		{
+			"id": 19,
+			"product": {
+				"title": "rewr",
+				"description": "werew",
+				"price": "23",
+				"thumbnail": "wrew",
+				"code": "wewrwe",
+				"stock": "234",
+				"status": true,
+				"category": "werew"
+			}
 		}
 	],
-	"id": 17,
+	"id": 21,
 	"path": "./products.json"
 }
