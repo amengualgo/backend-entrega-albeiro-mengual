@@ -185,8 +185,34 @@
 				"status": true,
 				"category": "category25"
 			}
+		},
+		{
+			"id": 30,
+			"product": {
+				"title": "producto de prueba 30",
+				"description": "Este es un producto prueba 30",
+				"price": "230",
+				"thumbnail": "/home/fox/coderHouse/comision-47340/entregables/pre-entrega-01/public/img/f2f220f7-54f8-4baf-a369-07488f43742f__2023-07-26_19-55.png",
+				"code": "abc30",
+				"stock": "30",
+				"status": true,
+				"category": "category30"
+			}
+		},
+		{
+			"id": 31,
+			"product": {
+				"title": "producto de prueba 31",
+				"description": "Este es un producto prueba 31",
+				"price": "231",
+				"thumbnail": "/home/fox/coderHouse/comision-47340/entregables/pre-entrega-01/public/img/1c308176-e8dc-4a2e-88d0-7dd4ecefa0dc__2023-07-26_19-55.png",
+				"code": "abc31",
+				"stock": "31",
+				"status": true,
+				"category": "category31"
+			}
 		}
 	],
-	"id": 25,
+	"id": 33,
 	"path": "./products.json"
 }
