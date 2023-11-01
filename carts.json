@@ -40,6 +40,15 @@
 					"quantity": 20
 				}
 			]
+		},
+		{
+			"id": "550bf762-f58c-433f-be14-c790eb6ad1ee",
+			"products": [
+				{
+					"id": 5,
+					"quantity": 7
+				}
+			]
 		}
 	],
 	"path": "./carts.json"
