@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
         return  res.status(500).json({message:e.message})
     }
 });
-router.get('/real-time-products', async (req, res) => {
+router.get('/realtimeproducts', async (req, res) => {
     try
     {
        /* const _products = await productManager.getProducts();

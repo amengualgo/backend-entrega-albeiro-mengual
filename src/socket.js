@@ -17,12 +17,14 @@ const init = (httpServer) =>{
             console.log(`Mensaje desde el cliente: ${JSON.stringify(msg)}`);
             await productManager.addProduct(msg);
             socketClient.broadcast.emit('init', {products: await productManager.getProducts()});
+            socketClient.emit('init', {products: await productManager.getProducts()});
         });
 
         socketClient.on('delete', async (msg) => {
             console.log(`delete desde el cliente: ${JSON.stringify(msg)}`);
             await productManager.deleteProduct(msg.id);
             socketClient.broadcast.emit('init', {products: await productManager.getProducts()});
+            socketClient.emit('init', {products: await productManager.getProducts()});
         });
     });
 }
