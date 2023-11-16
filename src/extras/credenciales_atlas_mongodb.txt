@@ -1,0 +1,4 @@
+amengualgo
+P77f3m3Ao8bz0WnF
+
+mongodb+srv://amengualgo:<password>@cluster0.vxiyarj.mongodb.net/
