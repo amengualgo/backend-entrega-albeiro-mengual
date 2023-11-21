@@ -1,4 +1,4 @@
-const Product = require('./product')
+const Product = require('../../../classes/product')
 const fs = require('fs');
 
 class ProductManager{

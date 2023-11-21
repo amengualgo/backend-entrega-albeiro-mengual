@@ -1,13 +1,15 @@
-const Cart = require('./cart')
+const Cart = require('../../../classes/cart')
 const fs = require('fs');
-const ProductManager = require("../classes/product-manager");
-const productManager = new ProductManager('./products.json');
+const ProductManagerDB = require("./product-manager-db");
+const productManagerDB = new ProductManagerDB();
 
-class CartManager{
+const cartModel = require("../../models/cart.model");
+
+
+class CartManagerDB{
     //#region constructor
-    constructor(path) {
+    constructor() {
         this.carts = [];
-        this.path = path;
     }
     //#endregion
 
@@ -15,11 +17,9 @@ class CartManager{
     createCart = async ()  => {
         try{
             let _cart = new Cart();
-            await this.getJSONFromFile(this.path);
-            this.carts.push(_cart);
-            console.log(`Elemento agregado correctamente, Id: ${_cart.id}`);
-            await this.saveJSONToFile(this.path, this);
-            return {status:true, message:'Elemento creado correctamente',id : _cart.id};
+            const  response = await cartModel.create(_cart);
+            console.log(`Elemento agregado correctamente, Id: ${response.id}`);
+            return {status:true, message:'Elemento creado correctamente',id : response.id};
         }catch (e) {
             throw(`Ocurrió un error en la operación: ${e}`);
         }
@@ -29,8 +29,7 @@ class CartManager{
         return this.products.find((element) => element.product.code == code ) ? true :  false;
     }
     findById = async (id)=>{
-        await this.getJSONFromFile(this.path);
-        const itemFound = this.carts.find((element) => element.id == id );
+        const itemFound = await cartModel.findById(id);
         if (itemFound){
             return itemFound;
         }else
@@ -42,25 +41,17 @@ class CartManager{
     addProductInCart = async (cid, pid, quantity) =>{
         const _carts = cid ? await this.findById(cid) : undefined;
         if(_carts){
-            const _product = await  productManager.findById(pid);
+            const _product = await  productManagerDB.findById(pid);
             if(_product){
                 const idx = _carts.products.findIndex(value => parseInt(value.id) === parseInt(pid));
                 if(idx>=0){
-                    _carts.products[idx].quantity = _carts.products[idx].quantity + parseInt(quantity);
-                    await this.getJSONFromFile(this.path);
-                    this.carts = this.carts.filter(value => value.id != cid);
-                    this.carts.push(_carts);
-                    await this.saveJSONToFile(this.path, this);
+                    _carts.products[idx].quantity = parseInt(_carts.products[idx].quantity) + parseInt(quantity);
+                    await cartModel.updateOne({id:cid, products:_carts.products});
                     return 200;
-
                 }else{
-                    _carts.products.push({id:parseInt(pid), quantity:parseInt(quantity)});
-                    await this.getJSONFromFile(this.path);
-                    this.carts = this.carts.filter(value => value.id != cid);
-                    this.carts.push(_carts);
-                    await this.saveJSONToFile(this.path, this);
+                    _carts.products.push({_id:pid, quantity:parseInt(quantity)});
+                    await cartModel.updateOne({id:cid, products:_carts.products});
                     return 201
-
                 }
             }else{
                 return 404
@@ -97,4 +88,4 @@ class CartManager{
     //#endregion
 }
 
-module.exports = CartManager;
+module.exports = CartManagerDB;

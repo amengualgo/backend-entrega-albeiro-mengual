@@ -43,34 +43,34 @@ const renderTable = (data)=>{
         data.products.map((value, index) => {
             const row = document.createElement("tr");
             const th = document.createElement("th");
-            th.innerText = value.id;
+            th.innerText = value._id;
             row.appendChild(th);
             let td = document.createElement("td");
-            td.innerText = value.product.title;
+            td.innerText = value.title;
             row.appendChild(td);
 
             td = document.createElement("td");
-            td.innerText = value.product.description;
+            td.innerText = value.description;
             row.appendChild(td);
 
             td = document.createElement("td");
-            td.innerText = value.product.price;
+            td.innerText = value.price;
             row.appendChild(td);
 
             td = document.createElement("td");
-            td.innerText = value.product.thumbnail;
+            td.innerText = value.thumbnail;
             row.appendChild(td);
 
             td = document.createElement("td");
-            td.innerText = value.product.code;
+            td.innerText = value.code;
             row.appendChild(td);
 
             td = document.createElement("td");
-            td.innerText = value.product.stock;
+            td.innerText = value.stock;
             row.appendChild(td);
 
             td = document.createElement("td");
-            td.innerText = value.product.category;
+            td.innerText = value.category;
             row.appendChild(td);
 
             td = document.createElement("td");

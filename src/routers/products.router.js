@@ -1,14 +1,16 @@
 const { Router } = require('express');
-const ProductManager = require("../classes/product-manager");
+const ProductManager = require("../dao/managers/files-system/product-manager");
+const ProductManagerDB = require("../dao/managers/mongo/product-manager-db");
 const express = require("express");
 const Product = require("../classes/product");
 const {uploader} = require('../common/utils');
 const router = Router();
 const productManager = new ProductManager('./products.json');
+const productManagerDB = new ProductManagerDB();
 router.use(express.urlencoded({extended: true}));
 router.get('/products', async (req, res) => {
     try{
-        const products = await productManager.getProducts();
+        const products = await productManagerDB.getProducts();//await productManager.getProducts();
         const {query} = req;
         const limit = parseInt(query.limit);
         return res.json(limit ? products.slice(0, limit) : products);
@@ -21,8 +23,8 @@ router.get('/products/:pid', async (req, res) => {
     try
     {
         const {params} = req;
-        const pid = parseInt(params.pid);
-        const product = pid ? await productManager.findById(pid) : undefined;
+        const pid = params.pid//parseInt(params.pid);
+        const product = pid ? await productManagerDB.findById(pid) : undefined; //await productManager.findById(pid) : undefined;
         return product ? res.json(product) : res.status(404).json({'message':'not found'});
     }catch (e) {
         console.log('A ocurrido un error: ', e.message);
@@ -33,7 +35,7 @@ router.post('/products', uploader.single('thumbnail'), async (req, res) => {
     let {body} = req;
     body.thumbnail = req.file.path;
     try{
-        const _response = await productManager.addProduct(body);
+        const _response = await productManagerDB.addProduct(body);//await productManager.addProduct(body);
         if(_response.status){
             res.status(201).json({message:_response.message});
 
@@ -49,8 +51,8 @@ router.put('/products/:pid', async (req, res) => {
     const {body} = req;
     const {params} = req;
     try{
-        const _response = await productManager.updateProduct(parseInt(params.pid), body);
-        if(_response.id){
+        const _response = await productManagerDB.updateProduct((params.pid), body);//await productManager.updateProduct(parseInt(params.pid), body);
+        if(_response._id){
             res.status(200).json({..._response})
         }else{
             res.status(400).json({errors:"Elemento no existe"})
@@ -63,7 +65,7 @@ router.put('/products/:pid', async (req, res) => {
 router.delete('/products/:pid', async (req, res) => {
     const {params} = req;
     try{
-        const _response = await productManager.deleteProduct(parseInt(params.pid));
+        const _response = await productManagerDB.deleteProduct((params.pid));//await productManager.deleteProduct(parseInt(params.pid));
         if(!_response){
             res.status(400).json({errors:"Elemento no existe"});
 

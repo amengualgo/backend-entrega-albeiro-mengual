@@ -1,7 +1,9 @@
 const server = require('socket.io');
 const {Server} = require("socket.io");
-const ProductManager = require("../src/classes/product-manager");
+const ProductManager = require("./dao/managers/files-system/product-manager");
+const ProductManagerDB = require("./dao/managers/mongo/product-manager-db");
 const productManager = new ProductManager('./products.json');
+const productManagerDB = new ProductManagerDB();
 
 let socketServer;
 
@@ -12,19 +14,20 @@ const init = (httpServer) =>{
     socketServer = new Server(httpServer);
     socketServer.on('connection', async (socketClient) => {
         console.log(`Nuevo cliente socket conectado: ${socketClient.id} `);
-        socketClient.emit('init', {products: await productManager.getProducts()});
+        const _products = await productManagerDB.getProducts();
+        socketClient.emit('init', {products: _products.map(prod => prod.toJSON()) });
         socketClient.on('message', async (msg) => {
             console.log(`Mensaje desde el cliente: ${JSON.stringify(msg)}`);
-            await productManager.addProduct(msg);
-            socketClient.broadcast.emit('init', {products: await productManager.getProducts()});
-            socketClient.emit('init', {products: await productManager.getProducts()});
+            await productManagerDB.addProduct(msg);
+            socketClient.broadcast.emit('init', {products: _products.map(prod => prod.toJSON())});
+            socketClient.emit('init', {products: _products.map(prod => prod.toJSON())});
         });
 
         socketClient.on('delete', async (msg) => {
             console.log(`delete desde el cliente: ${JSON.stringify(msg)}`);
-            await productManager.deleteProduct(msg.id);
-            socketClient.broadcast.emit('init', {products: await productManager.getProducts()});
-            socketClient.emit('init', {products: await productManager.getProducts()});
+            await productManagerDB.deleteProduct(msg.id);
+            socketClient.broadcast.emit('init', {products: _products.map(prod => prod.toJSON())});
+            socketClient.emit('init', {products: _products.map(prod => prod.toJSON())});
         });
     });
 }

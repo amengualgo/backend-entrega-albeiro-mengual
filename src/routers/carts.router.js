@@ -1,14 +1,16 @@
 const { Router } = require('express');
-const CartManager = require("../classes/cart-manager");
+const CartManager = require("../dao/managers/files-system/cart-manager");
+const CartManagerDB = require("../dao/managers/mongo/cart-manager-db");
 const express = require("express");
 const router = Router();
 const cartManager = new CartManager('./carts.json');
+const cartManagerDB = new CartManagerDB();
 
 router.use(express.urlencoded({extended: true}));
 
 router.post('/carts', async (req, res) => {
     try{
-        const _response = await cartManager.createCart();
+        const _response = await cartManagerDB.createCart();//await cartManager.createCart();
         if(_response.status){
             res.status(201).json({..._response})
         }else{
@@ -24,7 +26,7 @@ router.get('/carts/:cid', async (req, res) => {
     {
         const {params} = req;
         const cid = params.cid;
-        const products = cid ? await cartManager.findById(cid) : undefined;
+        const products = cid ? await cartManagerDB.findById(cid):undefined;//await cartManager.findById(cid) : undefined;
         return products ? res.json(products) : res.status(404).json({'message':'not found'});
     }catch (e) {
         console.log('A ocurrido un error: ', e.message);
@@ -38,7 +40,7 @@ router.post('/carts/:cid/product/:pid', async (req, res) => {
         let {quantity} = req.body;
         quantity = quantity ? quantity : 1;
         const {cid, pid} = params;
-        const _response = await cartManager.addProductInCart(cid, pid, quantity);
+        const _response = await cartManagerDB.addProductInCart(cid, pid, quantity); //await cartManager.addProductInCart(cid, pid, quantity);
         if(_response == 200){
             res.status(200).json({'message':'Producto actualizado en el carrito'});
         }else{
