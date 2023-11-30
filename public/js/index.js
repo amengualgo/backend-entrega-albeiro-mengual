@@ -77,8 +77,8 @@ const renderTable = (data)=>{
             var btn = document.createElement("button");
             btn.innerHTML = "eliminar";
             btn.addEventListener("click", (event)=>{
-                console.log('click en boton # ' , value.id);
-                socket.emit('delete', {id:value.id});
+                console.log('click en boton # ' , value);
+                socket.emit('delete', {id:value.id ? value.id : value._id});
             })
             td.appendChild(btn);
             row.appendChild(td);

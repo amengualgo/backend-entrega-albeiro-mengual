@@ -14,11 +14,12 @@ const init = (httpServer) =>{
     socketServer = new Server(httpServer);
     socketServer.on('connection', async (socketClient) => {
         console.log(`Nuevo cliente socket conectado: ${socketClient.id} `);
-        const _products = await productManagerDB.getProducts();
+        let _products = await productManagerDB.getProducts();
         socketClient.emit('init', {products: _products.map(prod => prod.toJSON()) });
         socketClient.on('message', async (msg) => {
             console.log(`Mensaje desde el cliente: ${JSON.stringify(msg)}`);
             await productManagerDB.addProduct(msg);
+            _products = await productManagerDB.getProducts();
             socketClient.broadcast.emit('init', {products: _products.map(prod => prod.toJSON())});
             socketClient.emit('init', {products: _products.map(prod => prod.toJSON())});
         });
@@ -26,6 +27,7 @@ const init = (httpServer) =>{
         socketClient.on('delete', async (msg) => {
             console.log(`delete desde el cliente: ${JSON.stringify(msg)}`);
             await productManagerDB.deleteProduct(msg.id);
+            _products = await productManagerDB.getProducts();
             socketClient.broadcast.emit('init', {products: _products.map(prod => prod.toJSON())});
             socketClient.emit('init', {products: _products.map(prod => prod.toJSON())});
         });
