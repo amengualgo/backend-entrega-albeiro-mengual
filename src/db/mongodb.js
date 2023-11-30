@@ -9,6 +9,7 @@ const initDB = async function (){
 
     }catch (e) {
         console.error(`An error occurred while trying to connect to the DB: ${e.message}`)
+        throw(`An error occurred while trying to connect to the DB: ${e.message}`);
     }
 }
 module.exports = initDB;

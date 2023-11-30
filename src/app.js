@@ -6,6 +6,7 @@ const handlebars = require('express-handlebars');
 const productsRouter =  require('./routers/products.router');
 const cartsRouter =  require('./routers/carts.router');
 const viewsRouter =  require('./routers/views.router');
+const chatsRouter = require('./routers/chats.router');
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -20,7 +21,15 @@ app.engine('handlebars', handlebars.engine());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine',  'handlebars');
 
+
+app.use((err, req, res, next)=>{
+    const _messageError = `Ha ocurrido un error no controlado 🥴: ${err.message}`
+    console.error(_messageError)
+    res.status(500).json({_messageError});
+    });
+
 app.use('/api', productsRouter, cartsRouter);
+app.use('/chat', chatsRouter);
 app.use('/', viewsRouter);
 
 module.exports = app;
