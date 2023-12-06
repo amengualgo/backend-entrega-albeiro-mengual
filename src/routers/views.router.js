@@ -11,8 +11,13 @@ router.use(express.urlencoded({extended: true}));
 router.get('/', async (req, res) => {
     try
     {
-        const _products = await productManagerDB.getProducts();
-        res.render('home', {title:`Lista de productos 🛒`, products:_products.map(prod => prod.toJSON()) })
+        const {query} = req;
+        const _products = await productManagerDB.getProducts(query, undefined);
+        let paginateValues = (({ docs, ...o }) => o)(_products);
+        paginateValues.nextLink = paginateValues.nextLink ? paginateValues.nextLink.replaceAll('/api/products','') : null;
+        paginateValues.prevLink = paginateValues.prevLink  ? paginateValues.prevLink.replaceAll('/api/products',''):null
+        res.render('home', {title:`Lista de productos 🛒`, products:_products.payload.map(prod => prod.toJSON()),
+        ...paginateValues});
     }catch (e) {
         console.log('A ocurrido un error: ', e.message);
         return  res.status(500).json({message:e.message})

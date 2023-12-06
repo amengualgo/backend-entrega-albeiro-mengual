@@ -47,9 +47,29 @@ class ProductManagerDB{
             return false;
         }
     }
-    getProducts = async () =>{
+    getProducts = async (query, responseUrlPage) =>{
         try{
-            return await productModel.find({});
+
+            const { limit=10, page=1, sort, search } = query;
+
+            // sort by price, ASC/DESC
+            // search by category
+            const criteria = {};
+            const options = { limit, page };
+            let paginationSearch = '', paginationSort= '';
+            if (sort) {
+                options.sort = {price: sort};
+                paginationSort = '&sort='+sort;
+            }
+            if (search){
+                criteria.category = search;
+                paginationSearch = '&search='+search;
+            }
+            const _response = await productModel.paginate(criteria, options);
+            const paginateValues = (({ docs, ...o }) => o)(_response);
+            return {status : 'success', payload : _response.docs, ...paginateValues,
+                prevLink:paginateValues.hasPrevPage ? `http://127.0.0.1:8080/api/products?limit=${limit}&page=${paginateValues.prevPage}${paginationSort}${paginationSearch}`:  null,
+                nextLink:paginateValues.hasNextPage ? `http://127.0.0.1:8080/api/products?limit=${limit}&page=${paginateValues.nextPage}${paginationSort}${paginationSearch}`: null};
         }catch (e) {
             throw(`Ocurrió un error en la operación: ${e}`);
         }

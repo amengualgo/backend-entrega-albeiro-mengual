@@ -32,6 +32,13 @@
                     {{/each}}
                     </tbody>
                 </table>
+                <p>Página actual: {{page}}</p>
+                {{#if hasPrevPage}}
+                    <a href="{{prevLink}}" role="link">anterior</a>
+                {{/if}}
+                {{#if hasNextPage}}
+                    <a href="{{nextLink}}" role="link">siguiente</a>
+                {{/if}}
             {{/if}}
         {{/if}}
     </div>

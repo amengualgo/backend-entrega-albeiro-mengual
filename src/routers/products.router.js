@@ -10,10 +10,9 @@ const productManagerDB = new ProductManagerDB();
 router.use(express.urlencoded({extended: true}));
 router.get('/products', async (req, res) => {
     try{
-        const products = await productManagerDB.getProducts();//await productManager.getProducts();
         const {query} = req;
-        const limit = parseInt(query.limit);
-        return res.json(limit ? products.slice(0, limit) : products);
+        const products = await productManagerDB.getProducts(query, undefined);
+        return res.status(200).json(products);
     }catch (e) {
         console.log('A ocurrido un error: ', e.message);
         return  res.status(500).json({error:e.message})
