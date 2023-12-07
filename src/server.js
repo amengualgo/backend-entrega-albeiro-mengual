@@ -4,11 +4,11 @@ const PORT = 8080;
 const {init} = require('./socket');
 
 
-const initDB = require('./db/mongodb')
+const {mongo} = require('./db/mongodb')
 const server = http.createServer(app);
 
 (async() => {
-    await initDB().then(()=>{
+    await mongo.initDB().then(()=>{
         server.listen(PORT, () => {
             console.log(`Servidor ejecutandose en http://localhost:${PORT}`);
             init(server);

@@ -1,0 +1,19 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+<article>
+    <form action="/api/sessions/register" method="post">
+        <header>
+            <h1>Registro</h1>
+        </header>
+        <input type="text" name="first_name" placeholder="nombres" required>
+        <input type="text" name="last_name" placeholder="apellidos" required>
+        <input type="text" name="email" placeholder="correo electrónico" required>
+        <input type="password" name="password" placeholder="password" required>
+        <input type="number" name="age" placeholder="edad">
+        <input type="text" name="rol" placeholder="rol" value="usuario">
+        <footer>
+            <input type="submit" value="Ingresar">
+        </footer>
+        <a href="/login">Quiero iniciar sesion</a>
+    </form>
+</article>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

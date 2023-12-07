@@ -12,4 +12,10 @@ const initDB = async function (){
         throw(`An error occurred while trying to connect to the DB: ${e.message}`);
     }
 }
-module.exports = initDB;
+module.exports = {
+    mongo: {
+        initDB: initDB,
+        URI: URI
+    }
+}
+

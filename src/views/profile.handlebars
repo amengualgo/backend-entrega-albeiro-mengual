@@ -1,0 +1,17 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+<article>
+
+    <header>
+        <h1>Bienvenido</h1>
+    </header>
+    <p>Nombres: {{user.first_name}}</p>
+    <p>Apellidos: {{user.last_name}}</p>
+    <p>Correo eletrónico: {{user.email}}</p>
+    <p>Edad: {{user.age}}</p>
+    <p>Rol: {{user.rol}}</p>
+    <footer>
+        <a href="/api/sessions/logout" role="button">Cerrar sesion</a>
+    </footer>
+
+</article>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

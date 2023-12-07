@@ -1,5 +1,16 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
 <main class="container">
+    <header>
+        <h1>Bienvenido</h1>
+    </header>
+    <p>Nombres: {{user.first_name}}</p>
+    <p>Apellidos: {{user.last_name}}</p>
+    <p>Correo eletrónico: {{user.email}}</p>
+    <p>Edad: {{user.age}}</p>
+    <p>Rol: {{user.rol}}</p>
+    <footer>
+        <a href="/api/sessions/logout" role="button">Cerrar sesion</a>
+    </footer>
     <h1>Productos existentes</h1>
     <div>
         {{#if products}}
@@ -15,6 +26,7 @@
                         <th scope="col">code</th>
                         <th scope="col">stock</th>
                         <th scope="col">category</th>
+                        <th scope="col">opciones</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -28,6 +40,10 @@
                             <td>{{this.code}}</td>
                             <td>{{this.stock}}</td>
                             <td>{{this.category}}</td>
+                            <td>
+                                <button>Ver</button>
+                                <button>Adicionar</button>
+                            </td>
                         </tr>
                     {{/each}}
                     </tbody>
@@ -42,4 +58,5 @@
             {{/if}}
         {{/if}}
     </div>
+
 </main>
