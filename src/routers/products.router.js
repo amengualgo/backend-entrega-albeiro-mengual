@@ -3,7 +3,7 @@ const ProductManager = require("../dao/managers/files-system/product-manager");
 const ProductManagerDB = require("../dao/managers/mongo/product-manager-db");
 const express = require("express");
 const Product = require("../classes/product");
-const {uploader} = require('../common/utils');
+const {utils} = require('../common/utils');
 const router = Router();
 const productManager = new ProductManager('./products.json');
 const productManagerDB = new ProductManagerDB();
@@ -30,7 +30,7 @@ router.get('/products/:pid', async (req, res) => {
         return  res.status(500).json({message:e.message})
     }
 });
-router.post('/products', uploader.single('thumbnail'), async (req, res) => {
+router.post('/products', utils.uploader.single('thumbnail'), async (req, res) => {
     let {body} = req;
     body.thumbnail = req.file.path;
     try{

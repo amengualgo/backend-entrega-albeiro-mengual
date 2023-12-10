@@ -50,7 +50,7 @@ class ProductManagerDB{
     getProducts = async (query, responseUrlPage) =>{
         try{
 
-            const { limit=10, page=1, sort, search } = query;
+            const { limit=10, page=1, sort, search } = query ? query : {}
 
             // sort by price, ASC/DESC
             // search by category

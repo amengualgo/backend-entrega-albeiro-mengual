@@ -13,9 +13,9 @@ const cartsRouter =  require('./routers/carts.router');
 const viewsRouter =  require('./routers/views.router');
 const chatsRouter = require('./routers/chats.router');
 const sessionsRouter = require('./routers/sessions.router');
-
+const passport = require('passport');
 const fileStorage = FileStorage(sessions);
-
+const init = require('../src/config/passport.config');
 app.use(sessions({
         //para archivos
         /*store:new fileStorage({
@@ -46,6 +46,10 @@ app.engine('handlebars', handlebars.engine());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine',  'handlebars');
 
+init();
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use((err, req, res, next)=>{
     const _messageError = `Ha ocurrido un error no controlado 🥴: ${err.message}`

@@ -20,7 +20,7 @@ const init = (httpServer) =>{
         let _products = await productManagerDB.getProducts();
         let _conversations = await messageManagerDB.getMessages();
 
-        socketClient.emit('init', {products: _products.map(prod => prod.toJSON()) });
+        socketClient.emit('init', {products: _products.payload.map(prod => prod.toJSON()) });
         socketClient.emit('conversations', {conversations: _conversations.map(conversation => conversation)});
 
         socketClient.on('message', async (msg) => {
@@ -45,9 +45,6 @@ const init = (httpServer) =>{
             socketClient.broadcast.emit('conversations', {conversations: _conversations.map(conversation => conversation)});
             socketClient.emit('conversations', {conversations: _conversations.map(conversation => conversation)});
         });
-
-
-
 
     });
 }

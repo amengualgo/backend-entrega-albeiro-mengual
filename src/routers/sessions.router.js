@@ -3,53 +3,21 @@ const express = require("express");
 const router = Router();
 router.use(express.urlencoded({extended: true}));
 const User = require('../dao/models/user.model');
+const {utils} = require('../common/utils');
+const passport = require('passport');
 
-router.post('/sessions/register', async (req, res) =>{
+router.post('/sessions/register',passport.authenticate('register', {failureRedirect:'/register'}), async (req, res) =>{
     try {
-        const {body: {first_name,last_name,age,email,password}} = req;
-
-        if (!first_name || !last_name || !email || !password) {
-            //return res.status(400).json({'message': 'Todos los campos son requeridos.'});
-            return  res.render('error', {tittle:'error', messageError : 'Todos los campos son requeridos.'})
-        }
-        const user = await User.create({
-            first_name,
-            last_name,
-            age,
-            email,
-            password
-        });
         res.redirect('/login');
     }catch (e) {
         console.log('A ocurrido un error: ', e.message);
-        //return  res.status(500).json({message:e.message})
         return  res.render('error', {tittle:'error', messageError : 'Todos los campos son requeridos.'})
     }
 } )
-router.post('/sessions/login', async (req, res) =>{
+router.post('/sessions/login',passport.authenticate('login', {failureRedirect:'/login'}), async (req, res) =>{
     try {
-        const {body: {email,password}} = req;
-
-        if (!email || !password) {
-            //return res.status(400).json({'message': 'El email y el password son requeridos'});
-            return  res.render('error', {tittle:'error', messageError : 'Credenciales inválidas'})
-        }
-        const user = await User.findOne({email});
-        if(!user)
-            //return res.status(401).json({'message': 'Credenciales inválidas'});
-            return  res.render('error', {tittle:'error', messageError : 'Credenciales inválidas'})
-
-        if(user.password !== password)
-            //return res.status(401).json({'message': 'Credenciales inválidas'});
-            return  res.render('error', {tittle:'error', messageError : 'Credenciales inválidas'})
-
-        req.session.user =   (({ password, ...o }) => o)(user._doc);
-
-        //return res.status(200).json({'message': 'Sesion iniciada correctamente'});
-
+        console.log('req.user', req.user);
         return  res.redirect('/products');
-
-
 
     }catch (e) {
         console.log('A ocurrido un error: ', e.message);
@@ -66,7 +34,6 @@ router.get('/sessions/profile', async (req, res) =>{
         return  res.status(500).json({message:e.message})
     }
 } )
-
 router.get('/sessions/logout', async (req, res) =>{
     try {
         req.session.destroy((error) =>{
@@ -78,5 +45,30 @@ router.get('/sessions/logout', async (req, res) =>{
         return  res.status(500).json({message:e.message})
     }
 } )
+router.post('/sessions/recover-pass', async (req, res) =>{
+    try {
+        const {body: {email,password}} = req;
+
+        if (!email || !password) {
+            return  res.render('error', {tittle:'error', messageError : 'Todos los datos son requeridos'})
+        }
+        const user = await User.findOne({email});
+        if(!user)
+
+            return  res.render('error', {tittle:'error', messageError : 'Credenciales inválidas'})
+
+        user.password = utils.createHash(password);
+        await User.updateOne({email}, user)
+
+        return  res.redirect('/login');
+
+
+
+    }catch (e) {
+        console.log('A ocurrido un error: ', e.message);
+        return  res.status(500).json({message:e.message})
+    }
+} )
+
 
 module.exports = router;
