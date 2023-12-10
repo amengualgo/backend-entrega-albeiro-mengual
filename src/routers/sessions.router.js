@@ -69,6 +69,10 @@ router.post('/sessions/recover-pass', async (req, res) =>{
         return  res.status(500).json({message:e.message})
     }
 } )
-
+router.get('/sessions/github', passport.authenticate('github', {scope:['user:email']}));
+router.get('/sessions/github/callback', passport.authenticate('github', {failureRedirect:'/login'}), (req, res)=>{
+    console.log('req.user', req.user);
+    return  res.redirect('/products');
+});
 
 module.exports = router;

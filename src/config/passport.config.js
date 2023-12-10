@@ -1,14 +1,20 @@
 const passport = require('passport');
 const {Strategy : LocalStrategy} = require('passport-local');
-
+const {Strategy : GithubStrategy} = require('passport-github2');
 const UserModel = require('../dao/models/user.model');
 const User = require("../dao/models/user.model");
 const {utils} = require("../common/utils");
+
 
 const init = ()=>{
     const registerOpts = {
         usernameField : 'email',
         passReqToCallBack : true
+    };
+    const githubOpts={
+        clientID: 'Iv1.fc0f7f17685f2399',
+        clientSecret: 'c205edbab2a1fb247a0ceba7281524f3bcf49dda',
+        callbackURL:'http://localhost:8080/api/sessions/github/callback'
     };
     passport.use('register', new LocalStrategy(registerOpts, async (req, email, password, done) => {
         const {body: {first_name, last_name, age,}} = req;
@@ -58,7 +64,24 @@ const init = ()=>{
     passport.deserializeUser(async (uid, done)=>{
         const user = await UserModel.findById(uid);
         done(null, user);
-    })
+    });
+    passport.use('github', new GithubStrategy(githubOpts, async (accesstoken, refreshtoken, profile, done)=>{
+        const email = profile._json.email;
+        let user = await  UserModel.findOne({email});
+        if(user){
+            return done(null, user);
+        }
+        user = {
+            password: '',
+            email,
+            first_name: profile._json.name,
+            last_name : '',
+            age:18
+        }
+        const newUser =  await UserModel.create(user);
+        done(null, newUser);
+    }))
+
 }
 
 
