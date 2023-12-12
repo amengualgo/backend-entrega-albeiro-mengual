@@ -9,7 +9,7 @@ const {utils} = require("../common/utils");
 const init = ()=>{
     const registerOpts = {
         usernameField : 'email',
-        passReqToCallBack : true
+        passReqToCallback : true
     };
     const githubOpts={
         clientID: 'Iv1.fc0f7f17685f2399',
@@ -17,7 +17,7 @@ const init = ()=>{
         callbackURL:'http://localhost:8080/api/sessions/github/callback'
     };
     passport.use('register', new LocalStrategy(registerOpts, async (req, email, password, done) => {
-        const {body: {first_name, last_name, age,}} = req;
+        const {body: {first_name, last_name, age, rol}} = req;
 
         if (!first_name || !last_name) {
             //return res.status(400).json({'message': 'Todos los campos son requeridos.'});
@@ -36,7 +36,8 @@ const init = ()=>{
             last_name,
             age,
             email,
-            password: utils.createHash(password)
+            password: utils.createHash(password),
+            rol
         });
 
         done(null, newUser);
@@ -49,9 +50,9 @@ const init = ()=>{
             return  done(new Error('Credenciales inválidas'));
         }
 
-        const isNotValidPass = utils.isValidPassword(password, user);
+        const isValidPass = utils.isValidPassword(password, user);
 
-        if(isNotValidPass){
+        if(!isValidPass){
             return  done(new Error('Credenciales inválidas'));
         }
 

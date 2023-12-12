@@ -2,6 +2,7 @@ const multer =  require('multer');
 const path = require('path');
 const {v4: uuidv4} = require("uuid");
 const bcrypt = require('bcrypt');
+const JWT = require('jsonwebtoken')
 const storage = multer.diskStorage({
     destination:(req, file, callback)=>{
         const folderPath = path.join(__dirname, '../../public/img');
@@ -17,7 +18,7 @@ const opts={
 };
 
 module.exports.uploader = multer(opts);
-
+const JWTSecret = '9^R353Q*49YuzMit'
 module.exports = {
     utils: {
         uploader: multer(opts),
@@ -26,6 +27,26 @@ module.exports = {
         },
         isValidPassword : (password, user)=>{
             return bcrypt.compareSync(password, user.password);
+        },
+        generateToken:(user)=>{
+            const payload = {
+                id:user._id,
+                first_name: user.first_name,
+                last_name: user.last_name,
+                email:user.email
+            }
+            return JWT.sign(payload,JWTSecret, {expiresIn: '1m'});
+        },
+        verifyToken:(user)=>{
+            return new Promise((resolve, reject)=>{
+                return JWT.verify(token,JWTSecret,(error, payload)=>{
+                    if(error){
+                        return reject(false);
+                    }
+                    resolve(payload);
+                });
+            });
+
         }
     }
 }
