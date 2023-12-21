@@ -13,6 +13,7 @@ const cartsRouter =  require('./routers/carts.router');
 const viewsRouter =  require('./routers/views.router');
 const chatsRouter = require('./routers/chats.router');
 const sessionsRouter = require('./routers/sessions.router');
+const authRouter = require('./routers/auth.router');
 const passport = require('passport');
 const fileStorage = FileStorage(sessions);
 const init = require('../src/config/passport.config');
@@ -57,7 +58,7 @@ app.use((err, req, res, next)=>{
     res.status(500).json({_messageError});
     });
 
-app.use('/api', productsRouter, cartsRouter, sessionsRouter);
+app.use('/api', productsRouter, cartsRouter, sessionsRouter, authRouter);
 app.use('/chat', chatsRouter);
 app.use('/', viewsRouter);
 

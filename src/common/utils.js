@@ -35,13 +35,13 @@ module.exports = {
                 last_name: user.last_name,
                 email:user.email
             }
-            return JWT.sign(payload,JWTSecret, {expiresIn: '1m'});
+            return JWT.sign(payload,JWTSecret, {expiresIn: '24h'});
         },
-        verifyToken:(user)=>{
-            return new Promise((resolve, reject)=>{
+        verifyToken:(token)=>{
+            return new Promise((resolve)=>{
                 return JWT.verify(token,JWTSecret,(error, payload)=>{
                     if(error){
-                        return reject(false);
+                        return resolve(false);
                     }
                     resolve(payload);
                 });
