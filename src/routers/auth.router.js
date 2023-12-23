@@ -17,6 +17,9 @@ const jwtAuth = async (req, res, next)=>{
 
         res.user = payload;
         next();
+
+
+
     }catch (e) {
         console.log('A ocurrido un error: ', e.message);
         return  res.status(500).json({message:e.message})
@@ -24,7 +27,33 @@ const jwtAuth = async (req, res, next)=>{
 
 
 }
-router.post('/auth/login', async (req, res) =>{
+
+const auth = async (req, res, next)=>{
+
+    try {
+        const { token } = req.cookies;
+
+        if(!token){
+            return res.status(401).json({message:'No estás autorizado'});
+        }
+        const payload = await utils.verifyToken(token);
+        if(!payload){
+            return res.status(401).json({message:'No estás autorizado'});
+        }
+
+        req.user = payload;
+        next();
+
+
+
+    }catch (e) {
+        console.log('A ocurrido un error: ', e.message);
+        return  res.status(500).json({message:e.message})
+    }
+
+
+}
+router.post('/auth/login',async (req, res) =>{
     try {
         const { email, password } = req.body;
         const user = await UserModel.findOne({email});
@@ -37,8 +66,10 @@ router.post('/auth/login', async (req, res) =>{
             return res.status(401).json({message:'Usuario o password inválido'});
         }
         const token = utils.generateToken(user);
-
-        res.status(200).json({access_token:token});
+        res.cookie('token',token,{
+            maxAge: 86400, //24 hrs
+            httpOnly:true
+        }).status(200).json({status:'success'});
 
     }catch (e) {
         console.log('A ocurrido un error: ', e.message);
@@ -46,12 +77,9 @@ router.post('/auth/login', async (req, res) =>{
     }
 } )
 
-
-
-
-router.get('/auth/current', jwtAuth,async (req, res) =>{
+router.get('/auth/current',auth,async (req, res) =>{
     try {
-        res.status(200).json(res.user);
+        res.status(200).json(req.user);
     }catch (e) {
         console.log('A ocurrido un error: ', e.message);
         return  res.status(500).json({message:e.message})

@@ -7,6 +7,7 @@ const FileStorage = require('session-file-store');
 const SESSION_SECRET = 'Yw3[xh2sa9kRqO52qEU5aAmi;9-v>k';
 const MongoStorage = require('connect-mongo');
 const {mongo} = require('./db/mongodb')
+const cookieParser = require('cookie-parser');
 
 const productsRouter =  require('./routers/products.router');
 const cartsRouter =  require('./routers/carts.router');
@@ -33,7 +34,7 @@ app.use(sessions({
         saveUninitialized:true
     })
 );
-
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname,'../public')));
