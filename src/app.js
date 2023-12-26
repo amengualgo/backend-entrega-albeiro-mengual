@@ -49,8 +49,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine',  'handlebars');
 
 init();
-
 app.use(passport.initialize());
+
 app.use(passport.session());
 
 app.use((err, req, res, next)=>{

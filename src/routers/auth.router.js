@@ -77,7 +77,7 @@ router.post('/auth/login',async (req, res) =>{
     }
 } )
 
-router.get('/auth/current',auth,async (req, res) =>{
+router.get('/auth/current',utils.authenticationMiddleware('jwt'), utils.authorizationMiddleware('admin'),async (req, res) =>{
     try {
         res.status(200).json(req.user);
     }catch (e) {
