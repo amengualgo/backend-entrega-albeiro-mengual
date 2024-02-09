@@ -65,7 +65,6 @@ module.exports = {
                 next();
             })(req, res, next);
         },
-
         authorizationMiddleware: (role) => (req, res, next) => {
             if(!req.user){
                 return res.status(401).json({message:'No estàs autenticado'});

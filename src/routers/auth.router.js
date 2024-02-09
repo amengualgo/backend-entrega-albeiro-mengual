@@ -86,6 +86,4 @@ router.get('/auth/current',utils.authenticationMiddleware('jwt'), utils.authoriz
     }
 } )
 
-
-
 module.exports = router;
